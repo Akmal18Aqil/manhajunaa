@@ -1,0 +1,44 @@
+{
+  "name": "manhajuna",
+  "version": "0.1.0",
+  "description": "Platform Tanya Jawab Ilmiah Islami Berbasis Reputasi",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "supabase:push": "supabase db push",
+    "supabase:pull": "supabase db pull",
+    "supabase:gen": "supabase gen types typescript --local > src/types/database.types.ts"
+  },
+  "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.9.0",
+    "@supabase/ssr": "^0.4.0",
+    "@supabase/supabase-js": "^2.43.0",
+    "@tanstack/react-query": "^5.27.0",
+    "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
+    "next": "^15.0.0",
+    "next-themes": "^0.4.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "slugify": "^1.6.6",
+    "tailwindcss": "^3.4.0",
+    "zod": "^3.22.0",
+    "zustand": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "supabase": "^1.120.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.3.0"
+  }
+}

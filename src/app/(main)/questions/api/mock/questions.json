@@ -1,0 +1,21 @@
+{
+  "questions": [
+    {
+      "id": "11111111-1111-1111-1111-111111111111",
+      "title": "Bagaimana hukum wudhu setelah tidur?",
+      "slug": "hukum-wudhu-setelah-tidur-1111",
+      "content": {"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Apakah tidur membatalkan wudhu?"}]}]},
+      "content_text": "Apakah tidur membatalkan wudhu?",
+      "user_id": "22222222-2222-2222-2222-222222222222",
+      "status": "HALL",
+      "views": 12,
+      "upvotes": 5,
+      "downvotes": 0,
+      "total_answers": 2,
+      "created_at": "2026-05-28T08:00:00.000Z",
+      "updated_at": "2026-05-28T08:00:00.000Z",
+      "profiles": {"id":"22222222-2222-2222-2222-222222222222","username":"santri1","display_name":"Santri Satu","role":"THALIB","reputation":10},
+      "question_tags": []
+    }
+  ]
+}
