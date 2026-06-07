@@ -171,7 +171,7 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
             return (
               <div
                 key={q.id}
-                className="card p-5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row gap-5 hover:border-primary-500/30 dark:hover:border-primary-500/20 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 rounded-xl"
+                className="card p-5 flex flex-col sm:flex-row gap-5 hover:border-primary-500/30 dark:hover:border-primary-500/20 hover:shadow-md dark:hover:shadow-none hover:-translate-y-0.5 transition-all duration-300"
               >
                 {/* Stats Section (StackOverflow premium layout) */}
                 <div className="flex sm:flex-col gap-3 sm:gap-2 justify-between sm:justify-start items-center sm:items-stretch w-full sm:w-28 shrink-0 text-xs font-semibold pt-1">
@@ -265,12 +265,12 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
                     </div>
 
                     {/* Author Badge (Glassmorphic) */}
-                    <div className="flex items-center gap-2.5 p-1.5 bg-gray-50/60 dark:bg-gray-850/40 rounded-lg border border-gray-150/40 dark:border-gray-800/50 text-xs">
+                    <div className="flex items-center gap-2.5 p-1.5 bg-gray-50/60 dark:bg-white/5 rounded-lg border border-gray-150/40 dark:border-white/10 text-xs">
                       <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-850 dark:text-primary-300 flex items-center justify-center font-bold border border-primary-200/50 dark:border-primary-800/50 shadow-sm">
                         {q.profiles?.username?.[0]?.toUpperCase() || 'U'}
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-[10px] text-gray-400 font-medium">ditanyakan oleh</span>
+                        <span className="text-[10px] text-gray-500 dark:text-gray-300 font-medium">ditanyakan oleh</span>
                         <span className="font-bold text-gray-900 dark:text-white leading-tight">
                           @{q.profiles?.username || 'user'}
                         </span>
@@ -282,7 +282,7 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
                           <span className="text-[9px] text-gray-400 font-medium leading-none">rep</span>
                         </div>
                       </div>
-                      <span className="text-gray-400 dark:text-gray-500 pl-1 border-l border-gray-200 dark:border-gray-800">
+                      <span className="text-gray-500 dark:text-gray-300 pl-1 border-l border-gray-200 dark:border-white/10">
                         {timeAgo}
                       </span>
                     </div>

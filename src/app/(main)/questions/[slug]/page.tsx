@@ -115,18 +115,18 @@ export default async function QuestionDetail({
 
           {/* Author info & metadata */}
           <div className="flex justify-end mt-4">
-            <div className="bg-primary-50/30 dark:bg-primary-950/10 border border-primary-100/30 dark:border-primary-900/10 rounded-md p-3 w-52 text-xs flex gap-2">
+            <div className="bg-primary-50/30 dark:bg-white/5 border border-primary-100/30 dark:border-white/10 rounded-md p-3 w-52 text-xs flex gap-2">
               <div className="flex-1 min-w-0 flex flex-col justify-between">
-                <span className="text-gray-450 dark:text-gray-400">penanya</span>
+                <span className="text-gray-500 dark:text-gray-300">penanya</span>
                 <span className="font-semibold text-gray-900 dark:text-white truncate">
                   @{data.profiles?.username}
                 </span>
               </div>
-              <div className="flex flex-col items-center bg-white dark:bg-gray-850 rounded border border-gray-150 dark:border-gray-850 px-1.5 py-0.5 justify-center w-14 shrink-0">
+              <div className="flex flex-col items-center bg-white dark:bg-gray-900/50 rounded border border-gray-150 dark:border-white/10 px-1.5 py-0.5 justify-center w-14 shrink-0">
                 <span className="font-bold text-secondary-dark text-xs leading-none">
                   🏆 {data.profiles?.reputation || 0}
                 </span>
-                <span className="text-[8px] text-gray-400">rep</span>
+                <span className="text-[8px] text-gray-500 dark:text-gray-400">rep</span>
               </div>
             </div>
           </div>
@@ -283,18 +283,18 @@ export default async function QuestionDetail({
 
                   {/* Answer Author metadata */}
                   <div className="flex justify-end mt-4">
-                    <div className="bg-gray-50/50 dark:bg-gray-850/50 border border-gray-150 dark:border-gray-800 rounded-md p-2.5 w-48 text-xs flex gap-2">
+                    <div className="bg-gray-50/50 dark:bg-white/5 border border-gray-150 dark:border-white/10 rounded-md p-2.5 w-48 text-xs flex gap-2">
                       <div className="flex-1 min-w-0 flex flex-col justify-between">
-                        <span className="text-gray-450 dark:text-gray-555">menjawab · {answerTime}</span>
+                        <span className="text-gray-500 dark:text-gray-300">menjawab · {answerTime}</span>
                         <span className="font-semibold text-gray-900 dark:text-white truncate">
                           @{a.profiles?.username}
                         </span>
                       </div>
-                      <div className="flex flex-col items-center bg-white dark:bg-gray-800 rounded border border-gray-150 dark:border-gray-800 px-1 py-0.5 justify-center w-12 shrink-0">
+                      <div className="flex flex-col items-center bg-white dark:bg-gray-900/50 rounded border border-gray-150 dark:border-white/10 px-1 py-0.5 justify-center w-12 shrink-0">
                         <span className="font-bold text-secondary-dark text-[11px] leading-none">
                           🏆 {a.profiles?.reputation || 0}
                         </span>
-                        <span className="text-[7.5px] text-gray-400">rep</span>
+                        <span className="text-[7.5px] text-gray-500 dark:text-gray-400">rep</span>
                       </div>
                     </div>
                   </div>

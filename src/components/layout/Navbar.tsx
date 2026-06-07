@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { signOut } from '@/lib/actions/auth.actions'
 import { getNotifications, markAsRead, markAllAsRead } from '@/lib/actions/notification.actions'
+import ThemeToggle from '@/components/theme/ThemeToggle'
 
 function formatRelativeTime(dateString: string) {
   const date = new Date(dateString)
@@ -131,7 +132,7 @@ export default function Navbar({ currentUser }: NavbarProps) {
   }
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-gray-200 bg-white/95 backdrop-blur dark:border-gray-800 dark:bg-gray-950/95 shadow-sm">
+    <nav className="sticky top-0 z-40 w-full border-b border-gray-200 bg-white/95 backdrop-blur-xl dark:border-white/5 dark:bg-[#0a0f18]/80 shadow-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* Left: Branding */}
@@ -151,7 +152,7 @@ export default function Navbar({ currentUser }: NavbarProps) {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari pertanyaan, tag, atau kitab..."
-                className="w-full rounded-md border border-gray-300 bg-gray-50 py-1.5 pl-4 pr-10 text-sm text-gray-900 focus:border-primary-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-primary-500"
+                className="w-full rounded-md border border-gray-300 bg-gray-50 py-1.5 pl-4 pr-10 text-sm text-gray-900 focus:border-primary-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-white/10 dark:bg-[#111827]/60 dark:text-white dark:focus:border-primary-500"
               />
               <button
                 type="submit"
@@ -169,6 +170,9 @@ export default function Navbar({ currentUser }: NavbarProps) {
         <div className="flex items-center gap-4">
           {currentUser ? (
             <div className="flex items-center gap-4">
+              
+              {/* Theme Toggle */}
+              <ThemeToggle />
               
               {/* Notification Bell Dropdown */}
               <div className="relative" ref={dropdownRef}>
@@ -273,6 +277,7 @@ export default function Navbar({ currentUser }: NavbarProps) {
             </div>
           ) : (
             <div className="flex items-center gap-2">
+              <ThemeToggle />
               <Link href="/login" className="btn btn-secondary px-3.5 py-1.5 text-sm">
                 Masuk
               </Link>
