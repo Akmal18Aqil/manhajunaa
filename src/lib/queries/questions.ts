@@ -137,11 +137,10 @@ export async function getQuestionBySlug(slug: string) {
 
   if (!question) return null
 
-  // Increment views
-  await supabase
-    .from('questions')
-    .update({ views: (question.views || 0) + 1 })
-    .eq('id', question.id)
+  // Increment views securely via RPC (bypasses RLS)
+  await supabase.rpc('increment_question_views', {
+    question_id: question.id,
+  })
 
   // Get answers
   const { data: answers } = await supabase

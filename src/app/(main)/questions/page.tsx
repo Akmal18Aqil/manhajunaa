@@ -174,11 +174,11 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
                 className="card p-5 flex flex-col sm:flex-row gap-5 hover:border-primary-500/30 dark:hover:border-primary-500/20 hover:shadow-md dark:hover:shadow-none hover:-translate-y-0.5 transition-all duration-300"
               >
                 {/* Stats Section (StackOverflow premium layout) */}
-                <div className="flex sm:flex-col gap-3 sm:gap-2 justify-between sm:justify-start items-center sm:items-stretch w-full sm:w-28 shrink-0 text-xs font-semibold pt-1">
+                <div className="order-2 sm:order-1 flex sm:flex-col gap-3 sm:gap-2 justify-between sm:justify-start items-center sm:items-stretch w-full sm:w-28 shrink-0 text-xs font-semibold sm:pt-1 mt-2 sm:mt-0 pt-3 border-t border-gray-100 sm:border-0 dark:border-gray-800">
                   
                   {/* Votes count */}
-                  <div className="flex flex-col items-center justify-center p-2 rounded-lg bg-gray-50/50 dark:bg-gray-850/30 w-full text-center">
-                    <span className={`text-base font-extrabold leading-none ${
+                  <div className="flex flex-col items-center justify-center py-1.5 px-2 sm:p-2 rounded-lg bg-gray-50/50 dark:bg-gray-850/30 w-full text-center">
+                    <span className={`text-sm sm:text-base font-extrabold leading-none ${
                       votesSum > 0
                         ? 'text-primary-700 dark:text-primary-400'
                         : votesSum < 0
@@ -192,14 +192,14 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
                   
                   {/* Answers count */}
                   {q.total_answers === 0 ? (
-                    <div className="flex flex-col items-center justify-center p-2 rounded-lg border border-gray-150 dark:border-gray-800 w-full text-center text-gray-400 dark:text-gray-500 bg-transparent">
-                      <span className="text-base font-bold leading-none">0</span>
+                    <div className="flex flex-col items-center justify-center py-1.5 px-2 sm:p-2 rounded-lg border border-gray-150 dark:border-gray-800 w-full text-center text-gray-400 dark:text-gray-500 bg-transparent">
+                      <span className="text-sm sm:text-base font-bold leading-none">0</span>
                       <span className="text-[9px] uppercase tracking-wider mt-1">jawaban</span>
                     </div>
                   ) : hasAccepted ? (
-                    <div className="flex flex-col items-center justify-center p-2 rounded-lg bg-emerald-600 text-white shadow-sm w-full text-center">
-                      <span className="text-base font-bold leading-none flex items-center gap-0.5 justify-center">
-                        <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                    <div className="flex flex-col items-center justify-center py-1.5 px-2 sm:p-2 rounded-lg bg-emerald-600 text-white shadow-sm w-full text-center">
+                      <span className="text-sm sm:text-base font-bold leading-none flex items-center gap-0.5 justify-center">
+                        <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                         {q.total_answers}
@@ -207,8 +207,8 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
                       <span className="text-[9px] uppercase tracking-wider mt-1 opacity-90">terjawab</span>
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center p-2 rounded-lg border border-emerald-500/40 text-emerald-700 dark:text-emerald-400 bg-emerald-50/20 dark:bg-emerald-950/10 w-full text-center">
-                      <span className="text-base font-bold leading-none">{q.total_answers}</span>
+                    <div className="flex flex-col items-center justify-center py-1.5 px-2 sm:p-2 rounded-lg border border-emerald-500/40 text-emerald-700 dark:text-emerald-400 bg-emerald-50/20 dark:bg-emerald-950/10 w-full text-center">
+                      <span className="text-sm sm:text-base font-bold leading-none">{q.total_answers}</span>
                       <span className="text-[9px] uppercase tracking-wider mt-1">jawaban</span>
                     </div>
                   )}
@@ -224,16 +224,14 @@ export default async function QuestionsPage({ searchParams }: PageProps) {
                 </div>
 
                 {/* Content Section */}
-                <div className="flex-1 min-w-0 flex flex-col justify-between">
+                <div className="order-1 sm:order-2 flex-1 min-w-0 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-start justify-between gap-3 mb-1.5">
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white hover:text-primary-700 dark:hover:text-primary-400 transition-colors leading-snug">
-                        <Link href={`/questions/${q.slug}`}>{q.title}</Link>
-                      </h3>
-                      <div className="shrink-0 scale-90 origin-top-right">
-                        <StatusBadge status={q.status} />
-                      </div>
+                    <div className="mb-2 inline-block scale-90 origin-top-left">
+                      <StatusBadge status={q.status} />
                     </div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white hover:text-primary-700 dark:hover:text-primary-400 transition-colors leading-snug mb-1.5">
+                      <Link href={`/questions/${q.slug}`}>{q.title}</Link>
+                    </h3>
 
                     <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-4 leading-relaxed">
                       {q.content_text}

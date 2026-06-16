@@ -7,6 +7,24 @@ import StatusBadge from '@/components/question/StatusBadge'
 import VoteButtons from '@/components/vote/VoteButtons'
 import AnswerForm from '@/components/answer/AnswerForm'
 import CommentForm from '@/components/comment/CommentForm'
+import { generateHTML } from '@tiptap/html'
+import StarterKit from '@tiptap/starter-kit'
+import TextAlign from '@tiptap/extension-text-align'
+
+function renderRichText(contentObj: any, fallbackText: string) {
+  if (!contentObj || typeof contentObj !== 'object' || contentObj.type !== 'doc') {
+    return <>{fallbackText}</>
+  }
+  try {
+    const html = generateHTML(contentObj, [
+      StarterKit,
+      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+    ])
+    return <div dangerouslySetInnerHTML={{ __html: html }} />
+  } catch (e) {
+    return <>{fallbackText}</>
+  }
+}
 
 export default async function QuestionDetail({
   params,
@@ -74,9 +92,9 @@ export default async function QuestionDetail({
         
         {/* Metadata */}
         <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 dark:text-gray-400 mt-3">
-          <span>Ditanyakan pada <strong className="text-gray-750 dark:text-gray-300">{timeAgo}</strong></span>
+          <span>Ditanyakan pada <strong className="text-gray-700 dark:text-gray-300">{timeAgo}</strong></span>
           <span>·</span>
-          <span>Dilihat <strong className="text-gray-750 dark:text-gray-300">{data.views || 0} kali</strong></span>
+          <span>Dilihat <strong className="text-gray-700 dark:text-gray-300">{data.views || 0} kali</strong></span>
           <span>·</span>
           <span>Status: <strong className="text-primary-700 dark:text-primary-400">{data.status}</strong></span>
         </div>
@@ -97,8 +115,8 @@ export default async function QuestionDetail({
 
         {/* Question Text Content */}
         <div className="flex-1 min-w-0">
-          <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-250 leading-relaxed text-sm sm:text-base bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800/80 p-5 rounded-lg">
-            {data.content_text}
+          <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-300 leading-relaxed text-sm sm:text-base bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800/80 p-5 rounded-lg [&_p[style*='text-align:\ right']]:font-arabic [&_p[style*='text-align:\ right']]:text-right [&_p[style*='text-align:\ right']]:text-xl [&_p[style*='text-align:\ right']]:leading-loose [&_p[style*='text-align:\ right']]:[direction:rtl]">
+            {renderRichText(data.content, data.content_text)}
           </div>
 
           {/* Tags */}
@@ -122,7 +140,7 @@ export default async function QuestionDetail({
                   @{data.profiles?.username}
                 </span>
               </div>
-              <div className="flex flex-col items-center bg-white dark:bg-gray-900/50 rounded border border-gray-150 dark:border-white/10 px-1.5 py-0.5 justify-center w-14 shrink-0">
+              <div className="flex flex-col items-center bg-white dark:bg-gray-900/50 rounded border border-gray-200 dark:border-white/10 px-1.5 py-0.5 justify-center w-14 shrink-0">
                 <span className="font-bold text-secondary-dark text-xs leading-none">
                   🏆 {data.profiles?.reputation || 0}
                 </span>
@@ -138,7 +156,7 @@ export default async function QuestionDetail({
             </h4>
             <div className="space-y-3 pl-2 border-l-2 border-gray-200 dark:border-gray-800">
               {data.comments?.map((c: any) => (
-                <div key={c.id} className="text-xs text-gray-700 dark:text-gray-350 py-1">
+                <div key={c.id} className="text-xs text-gray-700 dark:text-gray-400 py-1">
                   <span className="font-medium text-gray-900 dark:text-white">
                     @{c.profiles?.username}
                   </span>
@@ -191,7 +209,7 @@ export default async function QuestionDetail({
       )}
 
       {/* Answers Section */}
-      <section className="mt-8 border-t border-gray-250 dark:border-gray-800/80 pt-6">
+      <section className="mt-8 border-t border-gray-300 dark:border-gray-800/80 pt-6">
         <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-4">
           {data.answers.length} Jawaban
         </h2>
@@ -227,7 +245,7 @@ export default async function QuestionDetail({
                 {/* Answer Content */}
                 <div className="flex-1 min-w-0">
                   {a.is_accepted && (
-                    <div className="inline-flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 font-extrabold mb-3 bg-emerald-100/60 dark:bg-emerald-950/30 px-3 py-1 rounded-full border border-emerald-250/50 dark:border-emerald-900/40">
+                    <div className="inline-flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 font-extrabold mb-3 bg-emerald-100/60 dark:bg-emerald-950/30 px-3 py-1 rounded-full border border-emerald-300/50 dark:border-emerald-900/40">
                       <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
@@ -235,21 +253,21 @@ export default async function QuestionDetail({
                     </div>
                   )}
 
-                  <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
-                    {a.content_text}
+                  <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-300 text-sm sm:text-base leading-relaxed [&_p[style*='text-align:\ right']]:font-arabic [&_p[style*='text-align:\ right']]:text-right [&_p[style*='text-align:\ right']]:text-xl [&_p[style*='text-align:\ right']]:leading-loose [&_p[style*='text-align:\ right']]:[direction:rtl]">
+                    {renderRichText(a.content, a.content_text)}
                   </div>
 
                   {/* References */}
                   {a.references && a.references.length > 0 && (
-                    <div className="mt-4 bg-gray-50/50 dark:bg-gray-850/40 border border-gray-150 dark:border-gray-850 rounded-xl p-4 sm:p-5">
+                    <div className="mt-4 bg-gray-50/50 dark:bg-gray-800/40 border border-gray-200 dark:border-gray-800 rounded-xl p-4 sm:p-5">
                       <h4 className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
                         <span>📜</span> Referensi Kitab Turats
                       </h4>
                       <div className="space-y-4">
                         {a.references.map((r: any) => (
-                          <div key={r.id} className="text-xs border-b border-gray-150/40 dark:border-gray-800/30 pb-3 last:border-b-0 last:pb-0">
+                          <div key={r.id} className="text-xs border-b border-gray-200/40 dark:border-gray-800/30 pb-3 last:border-b-0 last:pb-0">
                             <div className="flex flex-wrap items-center justify-between gap-2">
-                              <div className="font-bold text-primary-750 dark:text-primary-400 text-sm flex items-center gap-1">
+                              <div className="font-bold text-primary-700 dark:text-primary-400 text-sm flex items-center gap-1">
                                 <span>📖</span> {r.kitab_master?.nama_latin} <span className="font-normal text-gray-400">({r.kitab_master?.nama_arab})</span>
                               </div>
                               <span className={`inline-block text-[9px] uppercase font-extrabold tracking-wider rounded-md px-2 py-0.5 border ${
@@ -262,7 +280,7 @@ export default async function QuestionDetail({
                                 {r.validation_status === 'VALID' ? '✓ Valid' : r.validation_status === 'TIDAK_VALID' ? '✗ Tidak Valid' : '⏳ Pending'}
                               </span>
                             </div>
-                            <div className="text-gray-450 dark:text-gray-555 mt-1 font-medium pl-5">
+                            <div className="text-gray-400 dark:text-gray-500 mt-1 font-medium pl-5">
                               Karya: {r.kitab_master?.pengarang} {r.jilid ? `· Jilid: ${r.jilid}` : ''} {r.bab ? `· Bab: ${r.bab}` : ''} · Halaman: {r.halaman}
                             </div>
                             {r.teks_arab && (
@@ -271,7 +289,7 @@ export default async function QuestionDetail({
                               </div>
                             )}
                             {r.terjemah && (
-                              <div className="text-gray-650 dark:text-gray-450 italic mt-1.5 pl-5 border-l-2 border-gray-205 dark:border-gray-800">
+                              <div className="text-gray-600 dark:text-gray-400 italic mt-1.5 pl-5 border-l-2 border-gray-200 dark:border-gray-800">
                                 "{r.terjemah}"
                               </div>
                             )}
@@ -283,14 +301,14 @@ export default async function QuestionDetail({
 
                   {/* Answer Author metadata */}
                   <div className="flex justify-end mt-4">
-                    <div className="bg-gray-50/50 dark:bg-white/5 border border-gray-150 dark:border-white/10 rounded-md p-2.5 w-48 text-xs flex gap-2">
+                    <div className="bg-gray-50/50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-md p-2.5 w-48 text-xs flex gap-2">
                       <div className="flex-1 min-w-0 flex flex-col justify-between">
                         <span className="text-gray-500 dark:text-gray-300">menjawab · {answerTime}</span>
                         <span className="font-semibold text-gray-900 dark:text-white truncate">
                           @{a.profiles?.username}
                         </span>
                       </div>
-                      <div className="flex flex-col items-center bg-white dark:bg-gray-900/50 rounded border border-gray-150 dark:border-white/10 px-1 py-0.5 justify-center w-12 shrink-0">
+                      <div className="flex flex-col items-center bg-white dark:bg-gray-900/50 rounded border border-gray-200 dark:border-white/10 px-1 py-0.5 justify-center w-12 shrink-0">
                         <span className="font-bold text-secondary-dark text-[11px] leading-none">
                           🏆 {a.profiles?.reputation || 0}
                         </span>

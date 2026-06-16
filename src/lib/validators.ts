@@ -7,11 +7,6 @@ export const questionSchema = z.object({
   tagIds: z.array(z.string()).min(1).max(5),
 })
 
-export const answerSchema = z.object({
-  content: z.record(z.unknown()),
-  contentText: z.string().min(20).max(10000),
-})
-
 export const referenceSchema = z.object({
   kitabId: z.string().uuid(),
   jilid: z.string().optional(),
@@ -20,6 +15,12 @@ export const referenceSchema = z.object({
   teksArab: z.string().optional(),
   terjemah: z.string().optional(),
   catatan: z.string().optional(),
+})
+
+export const answerSchema = z.object({
+  content: z.record(z.unknown()),
+  contentText: z.string().min(20).max(10000),
+  references: z.array(referenceSchema).optional(),
 })
 
 export const commentSchema = z.object({

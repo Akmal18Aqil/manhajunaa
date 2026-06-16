@@ -130,6 +130,15 @@ export async function submitAnswer(data: {
   questionId: string
   content: Record<string, unknown>
   contentText: string
+  references?: Array<{
+    kitabId: string
+    jilid?: string
+    bab?: string
+    halaman: string
+    teksArab?: string
+    terjemah?: string
+    catatan?: string
+  }>
 }) {
   const supabase = (await createClient()) as any
   const { data: { user } } = await supabase.auth.getUser()
@@ -139,9 +148,10 @@ export async function submitAnswer(data: {
   const validated = answerSchema.parse({
     content: data.content,
     contentText: data.contentText,
+    references: data.references,
   })
 
-  const { error } = await supabase
+  const { data: newAnswer, error } = await supabase
     .from('answers')
     .insert({
       question_id: data.questionId,
@@ -149,8 +159,36 @@ export async function submitAnswer(data: {
       content: validated.content,
       content_text: validated.contentText,
     })
+    .select('id')
+    .single()
 
   if (error) throw error
+
+  if (validated.references && validated.references.length > 0) {
+    const referencesToInsert = validated.references.map((ref) => ({
+      answer_id: newAnswer.id,
+      kitab_id: ref.kitabId,
+      jilid: ref.jilid || null,
+      bab: ref.bab || null,
+      halaman: ref.halaman,
+      teks_arab: ref.teksArab || null,
+      terjemah: ref.terjemah || null,
+      catatan: ref.catatan || null,
+      validated_by_id: null,
+      validation_status: 'PENDING'
+    }))
+
+    const { error: refError } = await supabase
+      .from('references')
+      .insert(referencesToInsert)
+
+    if (refError) {
+      console.error('Failed to insert references:', refError)
+      // Note: In a real production system, this should be a transaction.
+      // Since Supabase JS client doesn't support transactions easily without RPC,
+      // we just log it. The answer is still saved.
+    }
+  }
 
   revalidatePath(`/questions`)
   return { success: true }

@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createQuestion } from '@/lib/actions/question.actions'
+import RichTextEditor from '@/components/editor/RichTextEditor'
 
 interface Tag {
   id: string
@@ -19,7 +20,8 @@ interface QuestionFormProps {
 export default function QuestionForm({ tags = [] }: QuestionFormProps) {
   const router = useRouter()
   const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
+  const [contentJson, setContentJson] = useState<any>('')
+  const [contentText, setContentText] = useState('')
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -43,7 +45,7 @@ export default function QuestionForm({ tags = [] }: QuestionFormProps) {
       setError('Judul pertanyaan minimal harus 10 karakter.')
       return
     }
-    if (!content.trim() || content.trim().length < 20) {
+    if (!contentText.trim() || contentText.trim().length < 20) {
       setError('Detail penjelasan minimal harus 20 karakter.')
       return
     }
@@ -58,11 +60,8 @@ export default function QuestionForm({ tags = [] }: QuestionFormProps) {
     try {
       const result = await createQuestion({
         title: title.trim(),
-        content: {
-          type: 'doc',
-          content: [{ type: 'paragraph', content: [{ type: 'text', text: content.trim() }] }],
-        },
-        contentText: content.trim(),
+        content: contentJson,
+        contentText: contentText.trim(),
         tagIds: selectedTagIds,
       })
 
@@ -126,17 +125,19 @@ export default function QuestionForm({ tags = [] }: QuestionFormProps) {
           <label className="block text-sm font-bold text-gray-900 dark:text-white mb-1">
             Detail Pertanyaan
           </label>
-          <p className="text-xs text-gray-500 mb-2">
+          <p className="text-xs text-gray-500 mb-3">
             Jelaskan kronologi, latar belakang, serta keraguan yang Anda alami secara mendetail (min. 20 karakter).
           </p>
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Tuliskan kronologi dan keraguan Anda dengan jelas..."
-            rows={8}
-            required
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 focus:outline-none text-sm"
-          />
+          <div className="shadow-sm">
+            <RichTextEditor
+              content={contentJson}
+              onChange={(json, _html, text) => {
+                setContentJson(json)
+                setContentText(text)
+              }}
+              placeholder="Tuliskan kronologi dan keraguan Anda dengan jelas..."
+            />
+          </div>
         </div>
 
         <div>
